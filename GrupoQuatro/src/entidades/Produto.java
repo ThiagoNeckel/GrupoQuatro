@@ -1,98 +1,39 @@
 package entidades;
 
-public class Produto {
-	
-	private String nomeProd;
-	private int codigo;
-	private int estoque;
-	private String marca;
-	private String dataF;
-	private String dataV;
-	
-	
-	public Produto(int codigo, String marca, String nomeProd, int estoqueInicial, String dataF, String dataV){
-		this.nomeProd = nomeProd;
-		this.codigo = codigo;
-		this.marca = marca;
-		deposito(estoqueInicial);
-		this.dataF = dataF;
-		this.dataV = dataV;
-		
-	}
-	
-	
+public final class Produto {
 
-	public String getNomeProd() {
-		return nomeProd;
-	}
-	
-	public void setNomeProd(String nomeProd) {
-		this.nomeProd = nomeProd;
-	}
-	
-	public int getCodigo() {
-		return codigo;
-	}
-	
-	public int getEstoque() {
-		return estoque;
-	}
-	
-	public int deposito(int quantidade) {
-		return estoque += quantidade;
-	}
-	
-	public int depositoTirar(int quantidade) {
-		return estoque -= quantidade;
-	}
-	
-	public String getMarca() {
-		return marca;
-	}
-	
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
-	
-	public  String getDataF() {
-		return dataF;
-	}
-	
-	public void setDataF(String dataF) {
-		this.dataF = dataF;
-	}
-	
-	public  String getDataV() {
-		return dataV;
-	}
-	
-	public void setDataV(String dataV) {
-		this.dataV = dataV;
-	}
+    private long codigo;
+    private String descricao;
+    private Marca marca;
 
 
-	
-	
-	public String toString() {
-		return    "Codigo Produto: "
-				+ getCodigo()
-				+ "\n"
-				+ "Nome do Produto: "
-				+ getNomeProd()
-				+ "\n"
-				+ "Marca do Produto: "
-				+ marca
-				+ "\n"
-				+ "data de Fabricação : "
-				+ dataF
-				+ "\n"
-				+ "data de Validade : "
-				+ dataV
-				+ "\n"
-				+ "Quantidade em estoque: "
-				+ getEstoque()
-				+ "\n --------------------------";
-	}
+    public Produto(final long codigo, final String descricao, final Marca marca) {
+        this.codigo = codigo;
+        this.descricao = descricao;
+        this.marca = marca;
+    }
 
-	
+    public long getCodigo() {
+        return codigo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    @Override
+    public String toString() {
+        return new util.BoxPrint(
+          java.util.Map.<String, String>of(
+            "codigo"   , String.valueOf(this.getCodigo()),
+            "descricao", String.valueOf(this.getDescricao()),
+            "marca"    , this.getMarca().getNome()
+          )
+        ).toString();
+    }
+
 }
