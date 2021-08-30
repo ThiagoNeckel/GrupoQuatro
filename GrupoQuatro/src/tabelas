@@ -1,0 +1,64 @@
+create table marca(
+	idMarca serial primary key not null,
+	nome VARCHAR(45) not null
+);
+
+create table venda (
+	idVenda serial primary key not null,
+	numero INTEGER not null,
+	ano INTEGER not null
+	
+);
+
+create table pessoa (
+	idPessoa serial primary key not null,
+	nome VARCHAR(45) not null,
+	numeroDocumento varchar(45) not null
+);
+
+create table produto (
+	idCodigo INTEGER primary key not null,
+	descricao VARCHAR(45) not null,	
+	idMarca serial,
+	FOREIGN KEY(idMarca) references marca (idMarca) 
+);
+
+
+create table compra (
+	idCompra serial primary key,
+	fornecedor varchar(45) not null,
+	idPessoa  serial,
+	FOREIGN KEY(idPessoa) references pessoa (idPessoa) 
+);
+
+create table estoque (
+	idEstoque serial primary key,
+	quantidade INTEGER ,
+	valorTotal BIGINT ,
+	idProduto INTEGER,
+	FOREIGN KEY(idProduto) REFERENCES produto (idCodigo)
+);
+
+create table usuario (
+	idMatricula INTEGER primary key,
+	funcao varchar(45) not null,
+	idPessoa INTEGER,
+	FOREIGN KEY(idPessoa) references pessoa (idPessoa)	
+);
+
+create table itemCompra (
+	idItemCompra serial primary key not null,
+	quantidade INTEGER not null,
+	valor BIGINT not null,
+	idProduto INTEGER,
+	idCompra INTEGER,
+	FOREIGN KEY(idProduto) REFERENCES produto (idCodigo),
+	FOREIGN KEY(idCompra) REFERENCES compra (idCompra)
+);
+
+create table itemVenda (
+	idEstoque INTEGER,
+	idVenda INTEGER,
+	FOREIGN KEY(idEstoque) references estoque (idEstoque),
+	FOREIGN KEY(idVenda) references venda (idVenda)
+);
