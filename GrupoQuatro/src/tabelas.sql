@@ -1,56 +1,55 @@
 CREATE TABLE marca(
-	idMarca SERIAL PRIMARY KEY NOT NULL,
+	id SERIAL PRIMARY KEY NOT NULL,
 	nome VARCHAR(45) NOT NULL
 );
 
 CREATE TABLE produto (
-	idProduto SERIAL PRIMARY KEY NOT NULL,
+	id SERIAL PRIMARY KEY NOT NULL,
 	descricao VARCHAR(45) NOT NULL,
-	idMarca INTEGER,
-	FOREIGN KEY(idMarca) REFERENCES marca (idMarca)
+	marca INTEGER,
+	FOREIGN KEY(marca) REFERENCES marca (id)
 );
 
-CREATE TABLE usuario (
-	idMatricula SERIAL PRIMARY KEY,
-	funcao varchar(45) NOT NULL,
-	nome TEXT
+CREATE TABLE pessoa (
+	id SERIAL PRIMARY KEY,
+	nome TEXT,
+	indentificacao VARCHAR(14) NOT NULL,
+	tipoPessoa VARCHAR(45) NOT NULL
+	
 );
 
 CREATE TABLE estoque (
-	idProduto INTEGER PRIMARY KEY NOT NULL,
-	quantidade NUMERIC(20, 2) NOT NULL,
-	FOREIGN KEY(idProduto) REFERENCES produto (idProduto)
+	Produto INTEGER PRIMARY KEY NOT NULL,
+	quantidade int NOT NULL,
+	valor NUMERIC NOT NULL
+	FOREIGN KEY(Produto) REFERENCES produto (id)
 );
 
 CREATE TABLE compra (
-	idCompra SERIAL PRIMARY KEY NOT NULL,
-	datahora TIMESTAMP NOT NULL,
-	idMatricula INTEGER NOT NULL,
-	fornecedor VARCHAR(45) NOT NULL,
-	FOREIGN KEY(idMatricula) REFERENCES usuario (idMatricula)
+	id SERIAL PRIMARY KEY NOT NULL,
+	data TIMESTAMP NOT NULL,
+	pessoa INTEGER NOT NULL,
+	estoque INTEGER NOT NULL,
+	FOREIGN KEY(pessoa) REFERENCES pessoa (id),
+	FOREIGN KEY(estoque) REFERENCES estoque (produto)
 );
 
-CREATE TABLE itemCompra (
-	idItemCompra SERIAL PRIMARY KEY NOT NULL,
-	idCompra INTEGER NOT NULL,
-	idProduto INTEGER NOT NULL,
-	quantidade NUMERIC(20, 2) NOT NULL,
-	FOREIGN KEY(idCompra) REFERENCES compra (idCompra),
-	FOREIGN KEY(idProduto) REFERENCES estoque (idProduto)
-);
 
 CREATE TABLE venda (
-	idVenda INTEGER PRIMARY KEY NOT NULL,
-	datahora TIMESTAMP NOT NULL,
-	idMatricula INTEGER NOT NULL,
-	FOREIGN KEY(idMatricula) REFERENCES usuario (idMatricula)
+	id INTEGER PRIMARY KEY NOT NULL,
+	data TIMESTAMP NOT NULL,
+	pessoa INTEGER NOT NULL,
+	estoque INTEGER NOT NULL,
+	FOREIGN KEY(pessoa) REFERENCES pessoa (id),
+	FOREIGN KEY(estoque) REFERENCES estoque (produto)
 );
 
-CREATE TABLE itemVenda (
-	idItemVenda INTEGER PRIMARY KEY NOT NULL,
-	idVenda INTEGER NOT NULL,
-	idProduto INTEGER NOT NULL,
-	quantidade NUMERIC(20, 2) NOT NULL,
-	FOREIGN KEY(idVenda) REFERENCES venda (idVenda),
-	FOREIGN KEY(idProduto) REFERENCES estoque (idProduto)
-);
+
+CREATE VIEW vendaestoque AS SELECT p.id , p.nome, p.indentificacao, p.tipopessoa, v."data" , e.produto, e.quantidade, e.valor  FROM pessoa p inner join venda v on v.id = p.id join estoque e on e.produto = v.estoque;
+
+
+CREATE VIEW compraestoque AS SELECT p.id , p.nome, p.indentificacao, p.tipopessoa, c."data", e.produto, e.quantidade, e.valor  FROM pessoa p inner join compra c on c.id = p.id join estoque e on e.produto = c.estoque;
+
+CREATE VIEW marcaProduto AS SELECT p.id , p.descricao, m.nome  FROM produto p inner join marca m on m.id = p.marca;
+
+CREATE VIEW ProdutoEstoque AS SELECT p.id , p.descricao, m.nome , e.quantidade, e.valor FROM produto p inner join marca m on m.id = p.marca join estoque e on p.id = e.produto; 
