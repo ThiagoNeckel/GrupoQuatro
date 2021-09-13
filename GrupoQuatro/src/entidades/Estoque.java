@@ -1,52 +1,63 @@
 package entidades;
 
-/**
- * Estoque de Produto.
- *
- * @author Celiculos
- */
 public class Estoque {
 
-    private final Produto produto;
-    private double quantidade;
+	private Produto produto;
+	private int quantidade;
+	private double valor;
 
+	public Estoque() {
+		// TODO Auto-generated constructor stub
+	}
 
-    public Estoque(final Produto produto, final double quantidade) {
-        this.produto = produto;
-        this.quantidade = quantidade;
-    }
+	public Estoque(Produto produto, int quantidade, double valor) {
 
-    public Estoque(Produto produto) {
-        this(produto, 0);
-    }
+		this.produto = produto;
+		this.quantidade = quantidade;
+		this.valor = valor;
+	}
 
+	public Produto getProduto() {
+		return produto;
+	}
 
-    public Produto getProduto() {
-        return produto;
-    }
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
 
-    public double getQuantidade() {
-        return quantidade;
-    }
+	public int getQuantidade() {
+		return quantidade;
+	}
 
-    public void entrada(double quantidade) {
-        this.quantidade += quantidade;
-    }
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
 
-    public void saida(double quantidade) {
-        //TODO validar quantidade negativa
-        this.quantidade -= quantidade;
-    }
+	public void entrada(int quantidade) {
+		this.quantidade += quantidade;
+	}
 
-    @Override
-    public String toString() {
-        return new util.BoxPrint(
-          java.util.Map.<String, String>of(
-            "Produto"       , this.getProduto().getDescricao(),
-            "Marca"         , this.getProduto().getMarca().getNome(),
-            "quantidade"    , String.format("%.2f", this.getQuantidade())
-          )
-        ).toString();
-    }
+	public void saida(int quantidade) {
+
+		this.quantidade -= quantidade;
+	}
+
+	public double getValor() {
+		return valor;
+	}
+
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+
+	public double valorTotal(double valor) {
+		return valor * this.quantidade;
+	}
+
+	public String toString() {
+		return getProduto().toString() + "Quantidade Estoque: " + getQuantidade() + "\n" + "Valor por unidade: "
+				+ String.format("%.2f", getValor()) + "\n" + "Valor total: " + String.format("%.2f", valorTotal(valor))
+				+ "\n";
+	}
 
 }
