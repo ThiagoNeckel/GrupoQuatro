@@ -1,38 +1,42 @@
 package entidades;
 
-/**
- * Marca de Produto.
- *
- * @author Celiculos
- */
-public final class Marca {
+public class Marca {
+	
+	private int id;
+	private String nome;
+	
+	public Marca() {
+		
+	}
+	
+	
+	public Marca( String nome) {
+		
+		this.nome = nome;
+	}
 
-    private long codigo;
-    private String nome;
+
+	public int getId() {
+		return id;
+	}
 
 
-    public Marca(final long codigo, final String nome) {
-        this.codigo = codigo;
-        this.nome   = nome;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
 
-    public long getCodigo() {
-        return codigo;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public String getNome() {
-        return nome;
-    }
 
-    @Override
-    public String toString() {
-        return new util.BoxPrint(
-            java.util.Map.<String, String>of(
-                "codigo", String.valueOf(this.getCodigo()),
-                "nome"  , this.getNome()
-            )
-        ).toString();
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	
 
+	
+	
 }
