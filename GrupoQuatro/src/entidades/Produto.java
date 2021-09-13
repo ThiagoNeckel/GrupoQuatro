@@ -1,39 +1,58 @@
 package entidades;
 
-public final class Produto {
+public class Produto {
+	
+	private int id; 
+	private String descricao;
+	private Marca marca;
+	
+	public Produto() {
+		// TODO Auto-generated constructor stub
+	}
 
-    private long codigo;
-    private String descricao;
-    private Marca marca;
+	public Produto(String descricao, Marca marca) {
+		this.descricao = descricao;
+		this.marca = marca;
+	}
 
+	public int getId() {
+		return id;
+	}
 
-    public Produto(final long codigo, final String descricao, final Marca marca) {
-        this.codigo = codigo;
-        this.descricao = descricao;
-        this.marca = marca;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public long getCodigo() {
-        return codigo;
-    }
+	public String getDescricao() {
+		return descricao;
+	}
 
-    public String getDescricao() {
-        return descricao;
-    }
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
-    public Marca getMarca() {
-        return marca;
-    }
+	public Marca getMarca() {
+		return marca;
+	}
 
-    @Override
-    public String toString() {
-        return new util.BoxPrint(
-          java.util.Map.<String, String>of(
-            "codigo"   , String.valueOf(this.getCodigo()),
-            "descricao", String.valueOf(this.getDescricao()),
-            "marca"    , this.getMarca().getNome()
-          )
-        ).toString();
-    }
+	public void setMarca(Marca marca) {
+		this.marca = marca;
+	}
+	
+	public String toString() {
+		return "Codigo: "
+				+ getId()
+				+ "\n"
+				+ "Nome Produto: "
+				+ getDescricao()
+				+ "\n"
+				+ "Marca Produto: "
+				+ getMarca();
+				
+				
+	}
+
+	
+	
 
 }
